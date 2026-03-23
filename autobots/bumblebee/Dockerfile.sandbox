@@ -1,0 +1,8 @@
+# Sandbox image for Bumblebee training bot.
+# Includes Python with matplotlib for generating training charts.
+# Rebuild with: docker build -t bumblebee-sandbox -f Dockerfile.sandbox .
+FROM python:3.13-slim
+
+RUN pip install --no-cache-dir \
+    matplotlib \
+    pandas

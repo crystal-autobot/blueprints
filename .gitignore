@@ -1,0 +1,23 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Session data
+workspace/sessions/
+
+# Logs
+logs/
+
+# Memory
+workspace/memory/
+
+# Generated files
+workspace/.output/
+history/
+
+# macOS
+.DS_Store
+
+# Preview skills
+.preview-skills/

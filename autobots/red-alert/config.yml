@@ -1,0 +1,62 @@
+agents:
+  defaults:
+    workspace: "./workspace"
+    model: "openai/gpt-4.1-mini"
+    # model: "anthropic/claude-sonnet-4-6"
+    max_tokens: 4096
+    temperature: 0.3
+    memory_window: 50
+
+providers:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+
+channels:
+  telegram:
+    enabled: true
+    streaming: true
+    token: "${TELEGRAM_BOT_TOKEN}"
+    allow_from: ["your-username"]
+    custom_commands:
+      macros:
+        status:
+          prompt: "Report status: 1) Weather — outdoor temperature, humidity 2) Home — indoor sensor readings 3) Devices — list active/inactive devices."
+          description: "Weather, sensors, and device status"
+        history:
+          prompt: "Generate a sensor chart for the last 12 hours using the charts skill. Send the image."
+          description: "Recent sensor trends"
+        overview:
+          prompt: "Give an overview of all devices and entities from Home Assistant."
+          description: "Home Assistant overview"
+
+# Home Assistant MCP server
+mcp:
+  servers:
+    homeassistant:
+      command: "uvx"
+      args: ["--python", "3.13", "ha-mcp"]
+      env:
+        HOMEASSISTANT_URL: "${HA_URL}"
+        HOMEASSISTANT_TOKEN: "${HA_TOKEN}"
+      tools:
+        - ha_get_state
+        - ha_get_overview
+        - ha_search_entities
+        - ha_call_service
+        - ha_config_get_automation
+        - ha_config_set_automation
+
+tools:
+  image:
+    enabled: false
+  sandbox: "docker"
+  docker_image: red-alert-sandbox
+  sandbox_env:
+    - HA_URL
+    - HA_TOKEN
+  exec:
+    timeout: 60
+
+gateway:
+  host: "127.0.0.1"
+  port: 18792

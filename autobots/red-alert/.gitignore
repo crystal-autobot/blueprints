@@ -1,0 +1,16 @@
+# Secrets
+.env
+.env.*
+
+# Session data
+workspace/sessions/
+
+# Logs
+logs/
+
+# Memory (uncomment to track in git)
+workspace/memory/
+
+# Generated files
+workspace/.output/
+history/

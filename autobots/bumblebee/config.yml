@@ -1,0 +1,66 @@
+agents:
+  defaults:
+    workspace: "./workspace"
+    model: "openai/gpt-4.1-mini"
+    # model: "anthropic/claude-sonnet-4-6"
+    max_tokens: 4096
+    temperature: 0.5
+    memory_window: 50
+
+providers:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+
+channels:
+  telegram:
+    enabled: true
+    streaming: true
+    token: "${TELEGRAM_BOT_TOKEN}"
+    allow_from: ["your-username"]
+    custom_commands:
+      macros:
+        week:
+          prompt: "Give me a weekly training summary. Pull data from Garmin and Strava for the last 7 days. Include total distance, duration, number of activities, and highlights."
+          description: "Weekly training summary"
+        progress:
+          prompt: "Show my training progress over the last 30 days. Generate a chart showing weekly volume trends. Use the training skill."
+          description: "Training progress chart"
+        plan:
+          prompt: "Show my training plan for the upcoming week. If no plan is saved in memory, ask what my goals are."
+          description: "Upcoming training plan"
+
+# Fitness MCP servers
+mcp:
+  servers:
+    garmin:
+      command: "uvx"
+      args: ["--python", "3.12", "--from", "git+https://github.com/Taxuspt/garmin_mcp", "garmin-mcp"]
+      env:
+        GARMIN_EMAIL: "${GARMIN_EMAIL}"
+        GARMIN_PASSWORD: "${GARMIN_PASSWORD}"
+      tools: ["get_activities*", "list_activities*", "get_stats"]
+
+    strava:
+      command: "uvx"
+      args: ["--python", "3.12", "--from", "git+https://github.com/igolaizola/strava-mcp", "strava-mcp"]
+      env:
+        STRAVA_CLIENT_ID: "${STRAVA_CLIENT_ID}"
+        STRAVA_CLIENT_SECRET: "${STRAVA_CLIENT_SECRET}"
+        STRAVA_REFRESH_TOKEN: "${STRAVA_REFRESH_TOKEN}"
+      tools: ["get_activities", "get_activity", "get_athlete*", "get_stats"]
+
+tools:
+  image:
+    enabled: false
+  web:
+    search:
+      api_key: "${BRAVE_API_KEY}"
+      max_results: 5
+  sandbox: "docker"
+  docker_image: bumblebee-sandbox
+  exec:
+    timeout: 60
+
+gateway:
+  host: "127.0.0.1"
+  port: 18791

@@ -1,0 +1,8 @@
+# Sandbox image for Red Alert home monitoring bot.
+# Includes Python with matplotlib and pandas for chart generation.
+# Rebuild with: docker build -t red-alert-sandbox -f Dockerfile.sandbox .
+FROM python:3.13-slim
+
+RUN pip install --no-cache-dir \
+    matplotlib \
+    pandas

@@ -1,0 +1,11 @@
+# Sandbox image for autobot Docker execution.
+# Customize this file to add tools your bot needs.
+# Rebuild with: docker build -t autobot-sandbox -f Dockerfile.sandbox .
+FROM alpine:latest
+
+RUN apk add --no-cache \
+    python3 \
+    curl \
+    sqlite \
+    git \
+    github-cli
