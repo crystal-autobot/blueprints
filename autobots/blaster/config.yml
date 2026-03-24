@@ -1,0 +1,56 @@
+agents:
+  defaults:
+    workspace: "./workspace"
+    model: "openai/gpt-4.1-mini"
+    # model: "anthropic/claude-sonnet-4-6"
+    # model: "deepseek/deepseek-chat"
+    max_tokens: 4096
+    temperature: 0.6
+    memory_window: 50  # Number of messages before consolidation (0 = disabled)
+
+providers:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+  # anthropic:
+  #   api_key: "${ANTHROPIC_API_KEY}"
+
+channels:
+  telegram:
+    enabled: true
+    streaming: true
+    token: "${TELEGRAM_BOT_TOKEN}"
+    allow_from: ["your-username"]
+    custom_commands:
+      macros:
+        practice:
+          prompt: "Start a conversation practice session. Pick an interesting everyday topic and talk to me in my target language. Keep it natural and at my level. Correct mistakes inline."
+          description: "Start a conversation practice"
+        vocab:
+          prompt: "Review my recently learned vocabulary. List the last 10-15 words/phrases I learned with translations and example sentences."
+          description: "Review recent vocabulary"
+        quiz:
+          prompt: "Give me a quick quiz: 5 questions mixing vocabulary, grammar, and translation. Use words and grammar I've been practicing. After I answer, score me and explain any mistakes."
+          description: "Quick vocabulary and grammar quiz"
+
+# MCP servers — connect external tools via Model Context Protocol
+# mcp:
+#   servers:
+#     my-server:
+#       command: "uvx"
+#       args: ["my-mcp-server"]
+#       env:
+#         API_KEY: "${MY_API_KEY}"
+
+tools:
+  web:
+    search:
+      api_key: "${BRAVE_API_KEY}"
+      max_results: 5
+  sandbox: "auto"
+  # docker_image: blaster-sandbox  # Uncomment to use custom sandbox image
+  exec:
+    timeout: 60
+
+gateway:
+  host: "127.0.0.1"
+  port: 18790
