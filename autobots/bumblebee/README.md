@@ -23,6 +23,11 @@
 | Training skill | Included | Weekly summaries, progress charts, workout logging |
 | Memory | Enabled | Remembers your training history and goals |
 
+## Documentation
+
+- [Quick start](https://crystal-autobot.github.io/autobot/quickstart/) — install Autobot and run your first bot
+- [Configuration](https://crystal-autobot.github.io/autobot/configuration/) — all config options explained
+
 ## Quick start
 
 ```bash

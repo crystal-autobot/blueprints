@@ -21,6 +21,11 @@
 | Sandbox execution | Auto | Docker (macOS) or bubblewrap (Linux) |
 | Memory | Enabled | Tracks vocabulary, level, and progress |
 
+## Documentation
+
+- [Quick start](https://crystal-autobot.github.io/autobot/quickstart/) — install Autobot and run your first bot
+- [Configuration](https://crystal-autobot.github.io/autobot/configuration/) — all config options explained
+
 ## Quick start
 
 ```bash

@@ -27,6 +27,11 @@
 | Custom skills | 2 | GIF generator, programming jokes |
 | Memory | Enabled | Consolidation after 50 messages |
 
+## Documentation
+
+- [Quick start](https://crystal-autobot.github.io/autobot/quickstart/) — install Autobot and run your first bot
+- [Configuration](https://crystal-autobot.github.io/autobot/configuration/) — all config options explained
+
 ## Quick start
 
 ```bash

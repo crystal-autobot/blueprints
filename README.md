@@ -114,6 +114,23 @@ mcp:
 
 ---
 
+## Documentation
+
+New to Autobot? Start here:
+
+- [Quick start](https://crystal-autobot.github.io/autobot/quickstart/) — installation and first run
+- [Configuration](https://crystal-autobot.github.io/autobot/configuration/) — all config options explained
+- [Providers](https://crystal-autobot.github.io/autobot/providers/) — choose and configure your LLM provider
+- [Telegram](https://crystal-autobot.github.io/autobot/telegram/) — set up a Telegram bot
+- [Slack](https://crystal-autobot.github.io/autobot/slack/) — set up a Slack bot
+- [MCP servers](https://crystal-autobot.github.io/autobot/mcp/) — extend your bot with external tools
+- [Sandboxing](https://crystal-autobot.github.io/autobot/security/) — secure code execution
+- [Memory](https://crystal-autobot.github.io/autobot/memory/) — sessions and long-term memory
+
+Full docs: [crystal-autobot.github.io/autobot](https://crystal-autobot.github.io/autobot/)
+
+---
+
 ## Contributing
 
 Have a cool autobot setup? Contributions are welcome!

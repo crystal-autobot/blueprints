@@ -21,6 +21,11 @@
 | Sandbox execution | Docker | Python with matplotlib and pandas |
 | Memory | Enabled | Remembers devices, entities, preferences |
 
+## Documentation
+
+- [Quick start](https://crystal-autobot.github.io/autobot/quickstart/) — install Autobot and run your first bot
+- [Configuration](https://crystal-autobot.github.io/autobot/configuration/) — all config options explained
+
 ## Quick start
 
 ```bash
