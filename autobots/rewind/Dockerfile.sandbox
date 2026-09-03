@@ -1,0 +1,4 @@
+# Sandbox image for Rewind notes bot.
+# Python standard library is enough for the notes skill.
+# Rebuild with: docker build -t rewind-sandbox -f Dockerfile.sandbox .
+FROM python:3.13-slim

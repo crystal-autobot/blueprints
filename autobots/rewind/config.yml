@@ -1,0 +1,66 @@
+agents:
+  defaults:
+    workspace: "./workspace"
+    model: "openai/gpt-4.1-mini"
+    # model: "anthropic/claude-sonnet-4-6"
+    max_tokens: 4096
+    temperature: 0.3
+    memory_window: 50
+
+providers:
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+  # Groq is preferred for transcription when configured (faster, free tier)
+  # groq:
+  #   api_key: "${GROQ_API_KEY}"
+
+channels:
+  telegram:
+    enabled: true
+    streaming: true
+    token: "${TELEGRAM_BOT_TOKEN}"
+    allow_from: ["your-username"]
+    custom_commands:
+      macros:
+        recent:
+          prompt: "List my 10 most recent notes with a one-line summary each. Use the notes skill."
+          description: "Recent notes"
+        today:
+          prompt: "Show today's daily note. If it does not exist yet, say so and list what I captured this week."
+          description: "Today's notes"
+        todos:
+          prompt: "Collect all unchecked action items across my notes and group them by note. Use the notes skill."
+          description: "Open action items"
+        digest:
+          prompt: "Write a weekly digest of everything I captured in the last 7 days: key ideas, decisions, and open action items. Use the notes skill."
+          description: "Weekly digest"
+
+# Notion sync (optional). Create an integration at https://www.notion.so/profile/integrations
+# and share the target page or database with it, then uncomment.
+# mcp:
+#   servers:
+#     notion:
+#       command: "npx"
+#       args: ["-y", "@notionhq/notion-mcp-server"]
+#       env:
+#         NOTION_TOKEN: "${NOTION_TOKEN}"
+
+tools:
+  image:
+    enabled: false
+  web:
+    search:
+      api_key: "${BRAVE_API_KEY}"
+      max_results: 5
+  sandbox: "docker"
+  docker_image: rewind-sandbox
+  exec:
+    timeout: 60
+
+cron:
+  enabled: true
+  store_path: "./cron.json"
+
+gateway:
+  host: "127.0.0.1"
+  port: 18792
