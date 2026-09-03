@@ -21,6 +21,7 @@
 | <img src="docs/images/bumblebee.jpg" width="48" /> | **[Bumblebee](autobots/bumblebee/)** | Training assistant with fitness integrations | Strava, Garmin, workout tracking, training plans, progress charts |
 | <img src="docs/images/blaster.jpg" width="48" /> | **[Blaster](autobots/blaster/)** | Language learning companion | Conversation practice, vocabulary tracking, quizzes, flashcards |
 | <img src="docs/images/red-alert.jpg" width="48" /> | **[Red Alert](autobots/red-alert/)** | Smart home monitor connected to Home Assistant | Device control, sensor charts, air quality tracking, automations |
+| <img src="docs/images/rewind.jpg" width="48" /> | **[Rewind](autobots/rewind/)** | Voice memos turned into organized notes | Whisper transcription, Obsidian vault, Notion sync, note search, weekly digests |
 
 ---
 
