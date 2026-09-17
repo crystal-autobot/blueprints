@@ -15,10 +15,10 @@
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| Telegram | Enabled | Streaming, language learning commands |
-| Web search | Enabled | Articles and cultural content in target language |
+| Telegram | Enabled | Language learning commands |
+| Web search | Optional | Articles and cultural content in target language (needs BRAVE_API_KEY) |
 | Flashcard skill | Included | Visual vocabulary cards with themed styles |
-| Sandbox execution | Auto | Docker (macOS) or bubblewrap (Linux) |
+| Sandbox execution | Docker | Python with Pillow for flashcards |
 | Memory | Enabled | Tracks vocabulary, level, and progress |
 
 ## Documentation
@@ -35,9 +35,10 @@ cd ~/my-language-bot
 
 # Set up environment
 cp .env.example .env
+chmod 600 .env
 # Edit .env with your API keys
 
-# (Optional) Build sandbox
+# Build sandbox (required for flashcards)
 docker build -t blaster-sandbox -f Dockerfile.sandbox .
 
 # Run
@@ -94,4 +95,6 @@ Blaster is an enthusiastic language tutor — patient, encouraging, and always r
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | Yes | OpenAI API key |
 | `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token from @BotFather |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key (if the `anthropic` model is enabled) |
+| `DEEPSEEK_API_KEY` | No | DeepSeek API key (if the `deepseek` model is enabled) |
 | `BRAVE_API_KEY` | No | Brave Search API key (for articles in target language) |

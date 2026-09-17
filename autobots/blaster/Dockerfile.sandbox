@@ -1,4 +1,9 @@
+# Sandbox image for Blaster language bot.
+# Includes Python with Pillow for flashcard images.
+# Rebuild with: docker build -t blaster-sandbox -f Dockerfile.sandbox .
 FROM python:3.13-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends fonts-dejavu-core sqlite3 && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir Pillow
 
