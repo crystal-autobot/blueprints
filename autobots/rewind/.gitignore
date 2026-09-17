@@ -9,12 +9,25 @@ workspace/sessions/
 # Logs
 logs/
 
-# Memory (uncomment to track in git)
+# Memory (optional - comment out if you want to commit)
 workspace/memory/
 
 # Generated files
 workspace/.output/
+workspace/notes/.staging.md
 history/
 
 # Your notes vault (uncomment to keep it out of git)
 # workspace/notes/
+
+# Plugin data (SQLite databases)
+workspace/data/
+
+# Incoming media and transcripts
+workspace/inbox/
+
+# Cron store
+cron.json
+
+# Python bytecode
+__pycache__/

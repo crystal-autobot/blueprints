@@ -20,8 +20,9 @@
 | Obsidian vault | Enabled | Markdown notes with frontmatter and wikilinks in `workspace/notes` |
 | Notion MCP | Optional | Mirror notes to a Notion page or database |
 | Notes skill | Included | Save transcripts, create and search notes, list action items |
+| Sandbox execution | Docker | Python standard library for the notes skill |
 | Cron | Enabled | Ask for a weekly digest on a schedule |
-| Web search | Optional | Look things up while organizing a note |
+| Web search | Optional | Look things up while organizing a note (needs BRAVE_API_KEY) |
 | Memory | Enabled | Remembers your tags, language, and preferences |
 
 ## How it works
@@ -52,6 +53,7 @@ cd ~/my-notes-bot
 
 # Set up environment
 cp .env.example .env
+chmod 600 .env
 # Edit .env with your API keys
 
 # Build sandbox
@@ -70,6 +72,8 @@ Open `workspace/notes` as a vault in Obsidian. Notes use standard frontmatter an
 The vault stays inside the workspace so the bot's file tools can reach it while sandboxing stays on.
 
 ## Notion
+
+Requires [Node.js](https://nodejs.org/) so `npx` can start the Notion MCP server.
 
 1. Create an internal integration at [notion.so/profile/integrations](https://www.notion.so/profile/integrations)
 2. Share the page or database where notes should go with the integration
@@ -132,6 +136,8 @@ Rewind is a quiet, careful archivist. It confirms captures in a few lines, cites
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | Yes | OpenAI API key (chat and Whisper transcription) |
 | `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token from @BotFather |
-| `GROQ_API_KEY` | No | Groq API key for faster transcription |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key (if the `anthropic` model is enabled) |
+| `GROQ_API_KEY` | No | Groq API key for faster transcription (also uncomment the `groq` provider in `config.yml`) |
 | `BRAVE_API_KEY` | No | Brave Search API key (for web search) |
 | `NOTION_TOKEN` | No | Notion integration token (for Notion sync) |
+| `TZ` | No | Timezone for note dates inside the sandbox (e.g. `Europe/Berlin`); defaults to UTC |

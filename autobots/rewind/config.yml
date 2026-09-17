@@ -1,7 +1,7 @@
 agents:
   defaults:
     workspace: "./workspace"
-    model: "openai/gpt-4.1-mini"
+    model: "openai/gpt-5-mini"
     # model: "anthropic/claude-sonnet-4-6"
     max_tokens: 4096
     temperature: 0.3
@@ -10,6 +10,8 @@ agents:
 providers:
   openai:
     api_key: "${OPENAI_API_KEY}"
+  # anthropic:
+  #   api_key: "${ANTHROPIC_API_KEY}"
   # Groq is preferred for transcription when configured (faster, free tier)
   # groq:
   #   api_key: "${GROQ_API_KEY}"
@@ -17,7 +19,6 @@ providers:
 channels:
   telegram:
     enabled: true
-    streaming: true
     token: "${TELEGRAM_BOT_TOKEN}"
     allow_from: ["your-username"]
     custom_commands:
@@ -54,6 +55,8 @@ tools:
       max_results: 5
   sandbox: "docker"
   docker_image: rewind-sandbox
+  sandbox_env:
+    - TZ
   exec:
     timeout: 60
 

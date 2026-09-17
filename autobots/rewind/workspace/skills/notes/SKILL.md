@@ -18,25 +18,29 @@ Manage the markdown vault in `notes/`.
 
 All commands run from the workspace root.
 
+Never put transcript or note text in the command string. Use the `write_file` tool to put the text in `notes/.staging.md` first, then redirect that file into the script.
+
 Save a raw transcript (prints the created path):
 ```bash
-echo '<transcript text>' | python3 skills/notes/notes.py transcript
+python3 skills/notes/notes.py transcript < notes/.staging.md
 ```
 
-Create or overwrite a topic note (body from stdin, frontmatter generated):
+Create or overwrite a topic note (body from `notes/.staging.md`, frontmatter generated):
 ```bash
-echo '<markdown body>' | python3 skills/notes/notes.py write --title "Kitchen renovation" --tags home,budget
+python3 skills/notes/notes.py write --title "Kitchen renovation" --tags home,budget < notes/.staging.md
 ```
 
 Append a section to an existing topic note (keeps frontmatter, bumps `updated`):
 ```bash
-echo '<markdown body>' | python3 skills/notes/notes.py append --title "Kitchen renovation"
+python3 skills/notes/notes.py append --title "Kitchen renovation" < notes/.staging.md
 ```
 
 Add links to today's daily note:
 ```bash
 python3 skills/notes/notes.py daily --link "transcripts/2026-09-03-0912" --link "notes/kitchen-renovation"
 ```
+
+`--link` takes the path printed by `transcript`/`write`/`append` with the leading `notes/` and the `.md` suffix removed, e.g. `notes/notes/kitchen-renovation.md` becomes `notes/kitchen-renovation`.
 
 Search notes (case-insensitive, all words must match, prints path, title and matching lines):
 ```bash
