@@ -22,16 +22,15 @@ Activate when the user asks for:
 Call the `exec` tool with exactly this command (replace text/style/output as needed):
 
 ```
-pip install Pillow -q && python skills/gif/generate.py --text "YOUR TEXT" --style wave --output gif_output.gif
+python3 skills/gif/generate.py --text "YOUR TEXT" --style wave --output .output/gif_output.gif
 ```
 
 ## Rules
 
 - Always use the exact command above via the `exec` tool. Do not modify it.
-- Do not check if Pillow is installed first. The command already handles installation.
-- Do not use `python -c` or `python3 -c`. These are blocked by security rules.
+- Do not use `python -c` or `python3 -c`. Use the provided script instead.
 - Do not write your own Python script. Use `skills/gif/generate.py` which is already provided.
-- The command runs inside a Docker container with Python. Everything is pre-configured.
+- Pillow is pre-installed in the sandbox image built from `Dockerfile.sandbox`.
 
 ### Parameters
 
@@ -39,7 +38,7 @@ pip install Pillow -q && python skills/gif/generate.py --text "YOUR TEXT" --styl
 |-------------|----------|---------|------------------------------------------|
 | `--text`    | yes      | —       | Text to animate                          |
 | `--style`   | no       | wave    | Animation style (see below)              |
-| `--output`  | no       | output.gif | Output file path                      |
+| `--output`  | no       | .output/output.gif | Output file path              |
 | `--width`   | no       | 480     | Canvas width in pixels                   |
 | `--height`  | no       | 160     | Canvas height in pixels                  |
 | `--fps`     | no       | 15      | Frames per second                        |
