@@ -30,8 +30,9 @@
 ### Prerequisites
 
 - [Autobot](https://github.com/crystal-autobot/autobot) installed (`brew install crystal-autobot/tap/autobot` or build from source)
-- [uv](https://docs.astral.sh/uv/) (required for MCP servers)
-- [Docker](https://www.docker.com/) (optional, for sandboxed execution)
+- [uv](https://docs.astral.sh/uv/) (required for the Garmin, Strava and Home Assistant MCP servers)
+- [Node.js](https://nodejs.org/) (required for the Notion MCP server in Rewind)
+- [Docker](https://www.docker.com/) (required for Bumblebee, Blaster, Red Alert and Rewind; optional for Optimus)
 
 ### Quick start
 
@@ -46,9 +47,10 @@ cp -r autobots/optimus ~/my-autobot
 # 3. Configure your API keys
 cd ~/my-autobot
 cp .env.example .env
+chmod 600 .env
 # Edit .env with your actual keys
 
-# 4. (Optional) Build sandbox image
+# 4. (Optional for Optimus) Build the sandbox image; other blueprints use the tag from their config.yml
 docker build -t autobot-sandbox -f Dockerfile.sandbox .
 
 # 5. Run
@@ -92,11 +94,17 @@ Autobot supports multiple LLM providers. Change the model in `config.yml`:
 ```yaml
 agents:
   defaults:
-    model: "openai/gpt-4.1-mini"       # OpenAI
+    model: "openai/gpt-5-mini"         # OpenAI
     # model: "anthropic/claude-sonnet-4-6" # Anthropic
     # model: "deepseek/deepseek-chat"   # DeepSeek
     # model: "gemini/gemini-2.5-flash"  # Google Gemini
+
+providers:
+  gemini:                              # must match the model prefix
+    api_key: "${GEMINI_API_KEY}"
 ```
+
+Each model prefix needs a matching entry under `providers:` and its key in `.env`; without it the request goes to whichever provider is configured.
 
 ### Adding MCP servers
 
@@ -125,7 +133,7 @@ New to Autobot? Start here:
 - [Telegram](https://crystal-autobot.github.io/autobot/telegram/) — set up a Telegram bot
 - [Slack](https://crystal-autobot.github.io/autobot/slack/) — set up a Slack bot
 - [MCP servers](https://crystal-autobot.github.io/autobot/mcp/) — extend your bot with external tools
-- [Sandboxing](https://crystal-autobot.github.io/autobot/security/) — secure code execution
+- [Sandboxing](https://crystal-autobot.github.io/autobot/sandboxing/) — secure code execution
 - [Memory](https://crystal-autobot.github.io/autobot/memory/) — sessions and long-term memory
 
 Full docs: [crystal-autobot.github.io/autobot](https://crystal-autobot.github.io/autobot/)
