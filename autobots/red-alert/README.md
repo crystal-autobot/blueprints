@@ -15,7 +15,7 @@
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| Telegram | Enabled | Streaming, home-specific commands |
+| Telegram | Enabled | Home-specific commands |
 | Home Assistant MCP | Enabled | Full HA integration via ha-mcp |
 | Charts skill | Included | Line, bar, pie, timeline charts from HA data |
 | Sandbox execution | Docker | Python with matplotlib and pandas |
@@ -35,6 +35,7 @@ cd ~/my-home-bot
 
 # Set up environment
 cp .env.example .env
+chmod 600 .env
 # Edit .env with your API keys
 
 # Build sandbox (required for charts)
@@ -47,11 +48,22 @@ autobot gateway
 ## Prerequisites
 
 ```bash
-# uv (required for ha-mcp)
+# uv (required for the Home Assistant MCP server)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ## Configuration
+
+### Channels
+
+**Telegram** is enabled by default. Update `allow_from` in `config.yml` with your Telegram username or numeric user ID:
+
+```yaml
+channels:
+  telegram:
+    enabled: true
+    allow_from: ["your-username"]
+```
 
 ### Home Assistant
 
@@ -73,7 +85,7 @@ The Home Assistant MCP server provides these tools:
 |------|-------------|
 | `ha_get_state` | Get current state of an entity |
 | `ha_get_overview` | Overview of all devices and entities |
-| `ha_search_entities` | Search entities by name or type |
+| `ha_search` | Search entities by name or type |
 | `ha_call_service` | Call HA services (turn on/off, set speed, etc.) |
 | `ha_config_get_automation` | Read automation configurations |
 | `ha_config_set_automation` | Create or update automations |
@@ -138,5 +150,7 @@ Red Alert is a vigilant home guardian — concise, proactive, and focused on kee
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | Yes | OpenAI API key |
 | `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token from @BotFather |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key (if the `anthropic` model is enabled) |
 | `HA_URL` | Yes | Home Assistant URL (e.g. `http://homeassistant.local:8123`) |
 | `HA_TOKEN` | Yes | Home Assistant long-lived access token |
+| `TZ` | No | Timezone for chart time labels inside the sandbox (e.g. `Europe/Berlin`); defaults to UTC |

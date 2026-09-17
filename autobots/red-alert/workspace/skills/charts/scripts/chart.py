@@ -30,6 +30,7 @@ import argparse
 import json
 import sys
 from datetime import datetime
+from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
@@ -85,7 +86,7 @@ def render_line(data, args):
     values = [d["v"] for d in data]
 
     fig, ax = plt.subplots(figsize=(args.width, args.height))
-    ax.plot(times, values, linewidth=2, color=args.color)
+    ax.plot(range(len(values)), values, linewidth=2, color=args.color)
 
     for val, label, color in parse_thresholds(args.thresholds):
         ax.axhline(y=val, color=color, linestyle="--", alpha=0.5, label=f"{label} ({val})")
@@ -149,6 +150,10 @@ def render_timeline(data, args):
         if ts and state:
             entries.append((ts, state))
 
+    window_end = None
+    if entries and entries[-1][1] == "__end__":
+        window_end = datetime.fromisoformat(entries.pop()[0])
+
     if not entries:
         print("No valid entries found", file=sys.stderr)
         sys.exit(1)
@@ -161,7 +166,7 @@ def render_timeline(data, args):
         if i + 1 < len(entries):
             end = datetime.fromisoformat(entries[i + 1][0])
         else:
-            end = datetime.now().astimezone()
+            end = window_end if window_end else datetime.now(tz=start.tzinfo)
         segments.append((start, end, state))
 
     multi_day = (segments[-1][1] - segments[0][0]).total_seconds() > 86400
@@ -223,13 +228,19 @@ def main():
     parser.add_argument("--height", type=float, default=5)
     args = parser.parse_args()
 
-    data = json.load(sys.stdin)
+    raw = sys.stdin.read().strip()
+    if not raw:
+        print("No input on stdin (did the fetch script fail?)", file=sys.stderr)
+        sys.exit(1)
+
+    data = json.loads(raw)
     if not data:
         print("No data to chart", file=sys.stderr)
         sys.exit(1)
 
     fig = RENDERERS[args.type](data, args)
     fig.tight_layout()
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.output, dpi=150)
     print(args.output)
 

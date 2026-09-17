@@ -10,14 +10,14 @@ Usage:
 
 Options:
   --days N        Lookback days (default: 7)
-  --period P      Aggregation: hourly, daily (default: daily)
+  --period P      Aggregation for numeric entities: hourly, daily (default: daily)
   --stat S        Numeric stat: avg, min, max, sum (default: avg)
   --unit U        State time unit: min, hours, days (default: min)
 
 Examples:
   python3 fetch-stats.py sensor.temperature --days 7 --stat avg
   python3 fetch-stats.py vacuum.robot --days 7
-  python3 fetch-stats.py switch.light --days 3 --period hourly
+  python3 fetch-stats.py switch.light --days 3 --unit hours
 
 Output:
   numeric: [{"t": "Mar 17", "v": 12.5}, ...]
@@ -36,7 +36,7 @@ from ha_client import fetch_history, get_ha_credentials
 
 def period_key(dt, period):
     if period == "hourly":
-        return dt.strftime("%a %H:00")
+        return dt.strftime("%b %d %H:00")
     return dt.strftime("%b %d")
 
 

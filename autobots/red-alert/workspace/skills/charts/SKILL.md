@@ -10,7 +10,7 @@ tool: exec
 |--------|----------------|---------------|----------|
 | `fetch-history.py` | Numeric sensor values, downsampled ~100 pts | `[{"t": "HH:MM", "v": float}]` | line |
 | `fetch-stats.py` | Aggregated stats (auto-detects numeric/state) | `[{"t": "label", "v": float}]` | bar, pie |
-| `fetch-states.py` | State transitions (deduped) | `[{"when": "ISO8601", "state": "..."}]` | timeline |
+| `fetch-states.py` | State transitions (deduped) | `[{"when": "ISO8601", "state": "..."}]`, last entry `state: "__end__"` marks the window end | timeline |
 
 ### fetch-history.py
 
@@ -20,7 +20,7 @@ python3 skills/charts/scripts/fetch-history.py <entity_id> <start> <end>
 ```
 
 - `hours` — lookback (default: 12)
-- `start end` — date range (`2025-03-20`, `2025-03-20T10:00`)
+- `start end` — date range in your local timezone (`2025-03-20`, `2025-03-20T10:00`)
 
 ### fetch-stats.py
 
@@ -29,7 +29,8 @@ python3 skills/charts/scripts/fetch-stats.py <entity_id> [options]
 ```
 
 - `--days N` — lookback days (default: 7)
-- `--period P` — hourly or daily (default: daily)
+- `--period P` — for numeric entities: hourly or daily (default: daily)
+- `--unit U` — state time unit: min, hours, days (default: min)
 - `--stat S` — for numeric entities: avg, min, max, sum (default: avg)
 
 For state entities outputs minutes spent in each state.
@@ -48,7 +49,7 @@ python3 skills/charts/scripts/fetch-states.py <entity_id> <start> <end>
 
 When fetch scripts don't cover your use case, get data via any MCP tool and pipe to chart.py:
 
-1. Call an MCP tool (e.g. `ha_get_state`, `ha_search_entities`)
+1. Call an MCP tool (e.g. `ha_get_state`, `ha_search`)
 2. Shape the response into the chart input format
 3. Pass via exec: `echo '<json>' | python3 skills/charts/scripts/chart.py --type <type> ...`
 

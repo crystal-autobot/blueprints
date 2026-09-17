@@ -12,14 +12,14 @@ from datetime import datetime, timedelta, timezone
 def parse_time(s):
     for fmt in ("%Y-%m-%dT%H:%M", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
         try:
-            return datetime.strptime(s, fmt).replace(tzinfo=timezone.utc)
+            return datetime.strptime(s, fmt).astimezone()
         except ValueError:
             continue
     raise ValueError(f"Cannot parse date: {s}")
 
 
 def fmt_ts(dt):
-    return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def fetch_history(base_url, token, entity_id, start, end):
@@ -72,6 +72,6 @@ def get_ha_credentials():
     base_url = os.environ.get("HA_URL", "").rstrip("/")
     token = os.environ.get("HA_TOKEN", "")
     if not base_url or not token:
-        print(json.dumps({"error": "HA_URL and HA_TOKEN env vars required"}))
+        print(json.dumps({"error": "HA_URL and HA_TOKEN env vars required"}), file=sys.stderr)
         sys.exit(1)
     return base_url, token
