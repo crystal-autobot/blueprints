@@ -1,4 +1,6 @@
 # Sandbox image for Rewind notes bot.
-# Python standard library is enough for the notes skill.
+# Includes Python for the notes skill and sqlite3 for the SQLite plugin.
 # Rebuild with: docker build -t rewind-sandbox -f Dockerfile.sandbox .
 FROM python:3.13-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends sqlite3 && rm -rf /var/lib/apt/lists/*

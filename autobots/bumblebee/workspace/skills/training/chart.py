@@ -25,6 +25,7 @@ Line/bar options:
 import argparse
 import json
 import sys
+from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
@@ -53,7 +54,7 @@ def render_line(data, args):
     values = [d["v"] for d in data]
 
     fig, ax = plt.subplots(figsize=(args.width, args.height))
-    ax.plot(times, values, linewidth=2, color=args.color, marker="o", markersize=4)
+    ax.plot(range(len(values)), values, linewidth=2, color=args.color, marker="o", markersize=4)
 
     for val, label, color in parse_thresholds(args.thresholds):
         ax.axhline(y=val, color=color, linestyle="--", alpha=0.5, label=f"{label} ({val})")
@@ -134,6 +135,7 @@ def main():
 
     fig = RENDERERS[args.type](data, args)
     fig.tight_layout()
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(args.output, dpi=150)
     print(args.output)
 

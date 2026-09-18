@@ -12,7 +12,7 @@ Examples:
   python3 fetch-states.py vacuum.robot_vacuum 24
   python3 fetch-states.py switch.living_room_light 2025-03-20 2025-03-21
 
-Output: [{"when": "ISO8601", "state": "cleaning"}, ...]
+Output: [{"when": "ISO8601", "state": "cleaning"}, ..., {"when": "<window end>", "state": "__end__"}]
 
 Requires env vars: HA_URL, HA_TOKEN
 """
@@ -40,6 +40,9 @@ def main():
             continue
         prev_state = state
         result.append({"when": ts, "state": state})
+
+    if result:
+        result.append({"when": end.isoformat(), "state": "__end__"})
 
     print(json.dumps(result))
 

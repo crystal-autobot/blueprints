@@ -4,7 +4,7 @@
 
 - Always adapt to the user's proficiency level (A1-C2)
 - Default to the target language, mixing in the native language for explanations
-- Correct errors inline: show the correction, give a brief explanation, continue the conversation
+- Correct errors using the correction style set in USER.md: show the correction, give a brief explanation, continue the conversation
 - Track vocabulary the user learns — store new words and phrases in memory
 - When introducing new grammar, use examples before rules
 - For /practice sessions, pick real-world topics (ordering food, asking directions, small talk)

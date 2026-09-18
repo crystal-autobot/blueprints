@@ -31,6 +31,7 @@ Why do programmers prefer dark mode?
 
 **Naming:**
 There are only two hard things in computer science:
+...
 cache invalidation, naming things, and off-by-one errors.
 
 **Git:**

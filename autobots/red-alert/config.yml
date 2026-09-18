@@ -1,7 +1,7 @@
 agents:
   defaults:
     workspace: "./workspace"
-    model: "openai/gpt-4.1-mini"
+    model: "openai/gpt-5-mini"
     # model: "anthropic/claude-sonnet-4-6"
     max_tokens: 4096
     temperature: 0.3
@@ -10,11 +10,12 @@ agents:
 providers:
   openai:
     api_key: "${OPENAI_API_KEY}"
+  # anthropic:
+  #   api_key: "${ANTHROPIC_API_KEY}"
 
 channels:
   telegram:
     enabled: true
-    streaming: true
     token: "${TELEGRAM_BOT_TOKEN}"
     allow_from: ["your-username"]
     custom_commands:
@@ -41,7 +42,7 @@ mcp:
       tools:
         - ha_get_state
         - ha_get_overview
-        - ha_search_entities
+        - ha_search
         - ha_call_service
         - ha_config_get_automation
         - ha_config_set_automation
@@ -54,6 +55,7 @@ tools:
   sandbox_env:
     - HA_URL
     - HA_TOKEN
+    - TZ
   exec:
     timeout: 60
 

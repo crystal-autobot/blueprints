@@ -15,10 +15,10 @@
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| Telegram | Enabled | Streaming, training-specific commands |
+| Telegram | Enabled | Training-specific commands |
 | Garmin MCP | Enabled | Activity tracking, stats, health metrics |
-| Strava MCP | Enabled | Activities, routes, segments, kudos |
-| Web search | Enabled | Training articles, race info lookup |
+| Strava MCP | Enabled | Recent activities, activities by date range |
+| Web search | Optional | Training articles, race info lookup (needs BRAVE_API_KEY) |
 | Sandbox execution | Docker | Python with matplotlib for charts |
 | Training skill | Included | Weekly summaries, progress charts, workout logging |
 | Memory | Enabled | Remembers your training history and goals |
@@ -37,6 +37,7 @@ cd ~/my-training-bot
 
 # Set up environment
 cp .env.example .env
+chmod 600 .env
 # Edit .env with your API keys
 
 # Build sandbox (required for charts)
@@ -44,6 +45,13 @@ docker build -t bumblebee-sandbox -f Dockerfile.sandbox .
 
 # Run
 autobot gateway
+```
+
+## Prerequisites
+
+```bash
+# uv (required for the Garmin and Strava MCP servers)
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ## Configuration
@@ -69,11 +77,13 @@ garmin:
   args: ["--python", "3.12", "--from", "git+https://github.com/Taxuspt/garmin_mcp", "garmin-mcp"]
 ```
 
-**Strava** — access your Strava activities, segments, and social features:
+If your Garmin account has MFA enabled, authenticate once before starting the bot: `uvx --python 3.12 --from git+https://github.com/Taxuspt/garmin_mcp garmin-mcp-auth`. Tokens are cached in `~/.garminconnect` and last about 6 months; the MCP server cannot prompt for an MFA code itself.
+
+**Strava** — read your recent Strava activities and activities in a date range:
 ```yaml
 strava:
   command: "uvx"
-  args: ["--python", "3.12", "--from", "git+https://github.com/igolaizola/strava-mcp", "strava-mcp"]
+  args: ["strava-mcp-server"]
 ```
 
 ### Custom commands
@@ -106,6 +116,7 @@ Bumblebee is an energetic, supportive training buddy — always enthusiastic abo
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | Yes | OpenAI API key |
 | `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token from @BotFather |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key (if the `anthropic` model is enabled) |
 | `BRAVE_API_KEY` | No | Brave Search API key (for web search) |
 | `GARMIN_EMAIL` | Yes* | Garmin Connect email |
 | `GARMIN_PASSWORD` | Yes* | Garmin Connect password |
@@ -113,4 +124,4 @@ Bumblebee is an energetic, supportive training buddy — always enthusiastic abo
 | `STRAVA_CLIENT_SECRET` | Yes* | Strava API application client secret |
 | `STRAVA_REFRESH_TOKEN` | Yes* | Strava API refresh token |
 
-*Required if corresponding MCP server is enabled. Remove unused servers from `config.yml`.
+*Required if corresponding MCP server is enabled. Remove unused servers from `config.yml`. Garmin credentials can be left blank once you have run `garmin-mcp-auth`.

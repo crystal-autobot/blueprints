@@ -15,9 +15,9 @@
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| Telegram | Enabled | Streaming, custom commands, user allowlist |
+| Telegram | Enabled | Custom commands, user allowlist |
 | Slack | Ready | Socket mode, group policies, DM support |
-| Web search | Enabled | Brave Search API |
+| Web search | Optional | Brave Search API (needs BRAVE_API_KEY) |
 | Image generation | Enabled | OpenAI (DALL-E / GPT Image) |
 | Sandbox execution | Auto | Docker (macOS) or bubblewrap (Linux) |
 | MCP servers | Ready | Add your own via config |
@@ -41,6 +41,7 @@ cd ~/my-autobot
 
 # Set up environment
 cp .env.example .env
+chmod 600 .env
 # Edit .env with your API keys
 
 # (Optional) Build sandbox
@@ -67,7 +68,8 @@ channels:
 
 1. Create a [Slack app](https://api.slack.com/apps) with Socket Mode
 2. Add `SLACK_BOT_TOKEN` and `SLACK_APP_TOKEN` to `.env`
-3. Set `enabled: true` in `config.yml`
+3. Put your Slack member ID in `allow_from` and `dm.allow_from`
+4. Set `enabled: true` in `config.yml`
 
 ### Custom commands
 
@@ -92,7 +94,7 @@ Palettes: `blue`, `fire`, `green`, `purple`, `gold`
 
 ### Programming jokes
 
-Tells programming jokes on demand. Categories: debugging, naming, git, languages.
+Tells programming jokes on demand. Categories: debugging, naming, git, languages, deadlines.
 
 ## Personality
 
@@ -104,6 +106,8 @@ Optimus is configured as the Autobot leader — noble, decisive, and helpful. Cu
 |----------|----------|-------------|
 | `OPENAI_API_KEY` | Yes | OpenAI API key |
 | `TELEGRAM_BOT_TOKEN` | Yes | Telegram bot token from @BotFather |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key (if the `anthropic` model is enabled) |
+| `DEEPSEEK_API_KEY` | No | DeepSeek API key (if the `deepseek` model is enabled) |
 | `BRAVE_API_KEY` | No | Brave Search API key (for web search) |
 | `SLACK_BOT_TOKEN` | No | Slack bot token (if Slack enabled) |
 | `SLACK_APP_TOKEN` | No | Slack app token (if Slack enabled) |

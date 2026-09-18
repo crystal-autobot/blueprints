@@ -1,7 +1,7 @@
 agents:
   defaults:
     workspace: "./workspace"
-    model: "openai/gpt-4.1-mini"
+    model: "openai/gpt-5-mini"
     # model: "anthropic/claude-sonnet-4-6"
     max_tokens: 4096
     temperature: 0.5
@@ -10,11 +10,12 @@ agents:
 providers:
   openai:
     api_key: "${OPENAI_API_KEY}"
+  # anthropic:
+  #   api_key: "${ANTHROPIC_API_KEY}"
 
 channels:
   telegram:
     enabled: true
-    streaming: true
     token: "${TELEGRAM_BOT_TOKEN}"
     allow_from: ["your-username"]
     custom_commands:
@@ -38,16 +39,16 @@ mcp:
       env:
         GARMIN_EMAIL: "${GARMIN_EMAIL}"
         GARMIN_PASSWORD: "${GARMIN_PASSWORD}"
-      tools: ["get_activities*", "list_activities*", "get_stats"]
+      tools: ["get_activities*", "get_activity", "get_activity_hr_in_timezones", "get_heart_rate_zones", "get_heart_rates*", "get_stats", "get_stats_range", "get_training_status"]
 
     strava:
       command: "uvx"
-      args: ["--python", "3.12", "--from", "git+https://github.com/igolaizola/strava-mcp", "strava-mcp"]
+      args: ["strava-mcp-server"]
       env:
         STRAVA_CLIENT_ID: "${STRAVA_CLIENT_ID}"
         STRAVA_CLIENT_SECRET: "${STRAVA_CLIENT_SECRET}"
         STRAVA_REFRESH_TOKEN: "${STRAVA_REFRESH_TOKEN}"
-      tools: ["get_activities", "get_activity", "get_athlete*", "get_stats"]
+      tools: ["get_activities", "get_activities_by_date_range", "get_activity_by_id", "get_recent_activities"]
 
 tools:
   image:

@@ -237,6 +237,7 @@ def generate_gif(text, style_name, output, width, height, fps, duration, palette
     frames = style_fn(text, width, height, num_frames, palette)
 
     frame_duration_ms = int(1000 / fps)
+    Path(output).parent.mkdir(parents=True, exist_ok=True)
     frames[0].save(
         output,
         save_all=True,
@@ -253,7 +254,7 @@ def main():
     parser.add_argument("--text", required=True, help="Text to animate")
     parser.add_argument("--style", default="wave", choices=list(STYLES.keys()),
                         help="Animation style (default: wave)")
-    parser.add_argument("--output", default="output.gif", help="Output file path")
+    parser.add_argument("--output", default=".output/output.gif", help="Output file path")
     parser.add_argument("--width", type=int, default=DEFAULT_WIDTH, help="Canvas width")
     parser.add_argument("--height", type=int, default=DEFAULT_HEIGHT, help="Canvas height")
     parser.add_argument("--fps", type=int, default=DEFAULT_FPS, help="Frames per second")

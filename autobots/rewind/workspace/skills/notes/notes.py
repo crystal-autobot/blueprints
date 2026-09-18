@@ -26,8 +26,8 @@ TODO = re.compile(r"^\s*- \[ \] (.+)$")
 
 
 def slugify(title):
-    slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
-    return slug or "untitled"
+    slug = re.sub(r"[^\w]+", "-", title.lower()).strip("-")
+    return slug or f"untitled-{now()}"
 
 
 def today():
@@ -70,8 +70,13 @@ def relative(path):
 
 def cmd_transcript(args):
     TRANSCRIPTS.mkdir(parents=True, exist_ok=True)
-    path = TRANSCRIPTS / f"{now()}.md"
-    fields = {"title": f"Transcript {now()}", "tags": "[transcript]", "created": today()}
+    stamp = now()
+    path = TRANSCRIPTS / f"{stamp}.md"
+    suffix = 2
+    while path.exists():
+        path = TRANSCRIPTS / f"{stamp}-{suffix}.md"
+        suffix += 1
+    fields = {"title": f"Transcript {stamp}", "tags": "[transcript]", "created": today()}
     path.write_text(render_frontmatter(fields) + "\n" + read_stdin() + "\n")
     print(path)
 

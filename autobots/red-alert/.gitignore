@@ -9,9 +9,21 @@ workspace/sessions/
 # Logs
 logs/
 
-# Memory (uncomment to track in git)
+# Memory (optional - comment out if you want to commit)
 workspace/memory/
 
 # Generated files
 workspace/.output/
 history/
+
+# Plugin data (SQLite databases)
+workspace/data/
+
+# Incoming media and transcripts
+workspace/inbox/
+
+# Cron store
+cron.json
+
+# Python bytecode
+__pycache__/
